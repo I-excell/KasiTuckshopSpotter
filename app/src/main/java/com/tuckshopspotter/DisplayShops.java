@@ -31,7 +31,6 @@ public class DisplayShops extends ActionBarActivity{
 
 
         //recieve Bundle
-
         Bundle b = this.getIntent().getBundleExtra("shopsBundle");
         //getting data from
         String shopname = b.getString("shopname");
