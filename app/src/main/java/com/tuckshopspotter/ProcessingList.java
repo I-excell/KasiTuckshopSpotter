@@ -1,71 +1,46 @@
 package com.tuckshopspotter;
 
-import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
-import android.view.View;
-import android.widget.AdapterView;
-import android.widget.Button;
-import android.widget.ListView;
-
-import com.tuckshopspotter.ShopDTO.ShopDTO;
-import com.tuckshopspotter.providers.ShopsContentProviderUtils;
-
-import java.util.ArrayList;
-import java.util.List;
+import android.widget.TextView;
 
 /**
  * Created by CodeTribe on 2015-03-28.
  */
 public class ProcessingList  extends ActionBarActivity {
-    Context ctx;
-    ListView listView;
-    Button btn_registershop;
-    NotificationAdaptor notificationAdaptor;
+        TextView txtShop_Name;
+        TextView txtInventory_Item;
+        TextView txtLatitude;
+        TextView txtLongitude;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.shop_display);
+        setContentView(R.layout.processing_list_layout);
 
-        listView = (ListView) findViewById(R.id.shops_listView);
-        List<ShopDTO> shopsList = ShopsContentProviderUtils.getShops(getContentResolver());
-        if (shopsList == null) {
-            shopsList = new ArrayList<>();
-        }
-        ctx = getApplicationContext();
-        notificationAdaptor = new NotificationAdaptor(ctx, shopsList);
-        listView.setAdapter(notificationAdaptor);
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        txtShop_Name = (TextView) findViewById(R.id.txtShop_Name);
+        txtInventory_Item =(TextView) findViewById(R.id.txtInventory);
+        txtLatitude = (TextView) findViewById(R.id.txtLatitude);
+        txtLongitude = (TextView) findViewById(R.id.txtLongitude);
 
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                ShopDTO shopitem = (ShopDTO) notificationAdaptor.getItem(position);
+        //**receving bundles**//
+        Bundle b = this.getIntent().getBundleExtra("shopsBundle");
 
-                Intent intent = new Intent(getApplicationContext(), ProcessingList.class);
+        //**getting fields**//
+        String shopname = b.getString("shopname");
+        String inventory = b.getString("inventory");
+        String latitude = b.getString("latitude");
+        String longitude = b.getString("longitude");
 
-                Bundle b = new Bundle();
-                b.putString("shopname",shopitem.getShopname());
-                b.putDouble("latitude", shopitem.getLongitude());
-                b.putDouble("longitude",shopitem.getLongitude());
-                b.putString("invenatory",shopitem.getInventory());
+        //**setting fields**//
+        txtShop_Name.setText(shopname);
+        txtInventory_Item.setText(inventory);
+        txtLatitude.setText(latitude);
+        txtLongitude.setText(longitude);
 
-                intent.putExtra("shopsBundle",b);
-                startActivity(intent);
-            }
-        });
-        listView.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-
-
-
-
-            }
-        });
     }
+
 }
 
 

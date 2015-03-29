@@ -1,19 +1,15 @@
 package com.tuckshopspotter;
 
-import android.content.Context;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ListView;
 import android.widget.TextView;
 
 import com.tuckshopspotter.ShopDTO.ShopDTO;
 import com.tuckshopspotter.providers.ShopsContentProviderUtils;
-
-import java.util.List;
 
 
 public class RegisterShop_Activity extends ActionBarActivity {
@@ -23,15 +19,12 @@ public class RegisterShop_Activity extends ActionBarActivity {
     TextView txtLongitude;
     Button btn_registershop;
 
-    ListView AM_list;
-    Context ctx;
-    List<ShopDTO> mShops;
-   // private NotificationAdaptor adaptor;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.shop_display);
+        setContentView(R.layout.register_shop);
 
         btn_registershop = (Button) findViewById(R.id.btn_registershop);
         txtShop_Name = (TextView) findViewById(R.id.txtShop_Name);
@@ -47,13 +40,12 @@ btn_registershop.setOnClickListener(new View.OnClickListener() {
         String inventory = txtInventory_Item.getText().toString();
         String latitude = txtLatitude.getText().toString();
         String longitude = txtLongitude.getText().toString();
+        String photourl="";
 
-        try {
-            ShopDTO shopDTO = new ShopDTO(shopname, inventory, Double.parseDouble(latitude), Double.parseDouble(longitude));
+       // ShopDTO shop = new ShopDTO(0,shopname,inventory,latitude,longitude,photourl,datetaken);
+        ShopDTO shopDTO = new ShopDTO(0,shopname, inventory, Double.parseDouble(latitude), Double.parseDouble(longitude),photourl);
             ShopsContentProviderUtils.addShop(getContentResolver(), shopDTO);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+
     }
 });
 
